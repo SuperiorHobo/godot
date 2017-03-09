@@ -2499,7 +2499,9 @@ void Node::_replace_connections_target(Node *p_new_target) {
 		Connection &c = E->get();
 
 		c.source->disconnect(c.signal, this, c.method);
-		c.source->connect(c.signal, p_new_target, c.method, c.binds, c.flags);
+		if (p_new_target->has_method(c.method)) {
+			c.source->connect(c.signal, p_new_target, c.method, c.binds, c.flags);
+		}
 	}
 }
 
